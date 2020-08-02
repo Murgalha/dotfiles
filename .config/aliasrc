@@ -1,0 +1,12 @@
+#!/bin/sh
+
+alias\
+	ls="ls --color=auto"\
+	ll="ls -hl --color=auto"\
+	la="ls -a --color=auto"\
+	lla="ls -hla --color=auto"\
+	grep="grep --color=auto"\
+	cp="cp -v"\
+	mv="mv -v"\
+	rm="rm -v"\
+	mkd="mkdir -pv"
