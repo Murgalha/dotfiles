@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+
+set_colors() {
+	# settings colors
+	if [ "$COLOR_SUPPORT" = true ]; then
+		GREEN="!Y u0xFF29c40d Y!"
+		YELLOW="!Y u0xFFede902 Y!"
+		ORANGE="!Y u0xFFf27f21 Y!"
+		RED="!Y u0xFFd30606 Y!"
+		FULL_RED="!Y bg0xFFd30606 u0xFF931501 Y!"
+	else
+		GREEN=""
+		YELLOW=""
+		ORANGE=""
+		RED=""
+		FULL_RED=""
+	fi
+
+}
+
+VERBOSE=false
+COLOR_SUPPORT=false
+
+# parsing command line arguments
+while [[ $# -gt 0 ]]; do
+key="$1"
+
+case $key in
+    -V|--verbose)
+		VERBOSE=true
+		shift # past argument
+		;;
+    -c|--color)
+		COLOR_SUPPORT=true
+		shift # past argument
+		;;
+    *)
+		echo "ERROR: unknown option '$1'"
+		exit -1
+    ;;
+esac
+done
+
+set_colors
+
+BAT_DIR="/sys/class/power_supply/BAT1"
+STATUS="$(cat $BAT_DIR/status)"
+
+# get charges to do percentage math
+FULL_CHARGE="$(cat $BAT_DIR/charge_full)"
+CUR_CHARGE="$(cat $BAT_DIR/charge_now)"
+
+# get percentage and round it
+PERCENTAGE="$(echo "($CUR_CHARGE / $FULL_CHARGE) * 100" | bc -l)"
+PERCENTAGE="$(printf %.0f $(echo $PERCENTAGE))"
+
+# define battery status
+if [ "$STATUS" = "Discharging" ]; then
+	BAR_STATUS="--"
+elif [ "$STATUS" = "Charging" ]; then
+	BAR_STATUS="++"
+elif [ "$STATUS" = "Full" ]; then
+	BAR_STATUS="=="
+fi
+
+# set battery drawing and colors
+
+if [ $PERCENTAGE -gt "75" ]; then
+	DRAWING="[####]"
+	COLOR="$GREEN"
+elif [ $PERCENTAGE -gt "50" ]; then
+	DRAWING="[### ]"
+	COLOR="$YELLOW"
+elif [ $PERCENTAGE -gt "25" ]; then
+	DRAWING="[##  ]"
+	COLOR="$ORANGE"
+elif [ $PERCENTAGE -gt "10" ]; then
+	DRAWING="[#   ]"
+	COLOR="$RED"
+else
+	DRAWING="[   ]"
+	COLOR="$FULL_RED"
+fi
+
+if [ "$VERBOSE" = true ]; then
+	echo "$PERCENTAGE% $STATUS"
+else
+	echo "$COLOR$DRAWING$BAR_STATUS"
+fi

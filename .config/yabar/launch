@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+killall -q yabar
+
+yabar -c $HOME/.config/yabar/yabar.conf &
