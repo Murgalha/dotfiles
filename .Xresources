@@ -1,0 +1,8 @@
+Xcursor.theme: Bibata_Classic
+Xcursor.size: 16
+
+Xft.antialias:  1
+Xft.hinting:    1
+Xft.hintstyle:  hintmedium
+Xft.lcdfilter:  lcddefault
+Xft.rgba:       rgb
