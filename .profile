@@ -14,5 +14,3 @@ export BROWSER="firefox"
 
 # change GNUPGHOME to use ~/.config/gnupg instead of ~/.gnupg
 export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
-
-export GPG_TTY=$(tty)
