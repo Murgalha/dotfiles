@@ -4,11 +4,9 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
-export SCRIPTS="$HOME/.scripts"
-export PATH="$PATH:$SCRIPTS"
+export PATH="$PATH:$HOME/bin"
 
-export ALTERNATE_EDITOR=''
-export EDITOR="emacsclient -cn"
+export EDITOR="emacs"
 export TERMINAL="st"
 export BROWSER="firefox"
 
