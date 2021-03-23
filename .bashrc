@@ -14,6 +14,10 @@ if [[ $- != *i* ]] ; then
 	return
 fi
 
+for sh in /etc/bash/bashrc.d/* ; do
+	[[ -r ${sh} ]] && source "${sh}"
+done
+
 # Bash won't get SIGWINCH if another process is in the foreground.
 # Enable checkwinsize so that bash will check the terminal size when
 # it regains control.  #65623
@@ -99,10 +103,6 @@ else
 	# show root@ when we don't have colors
 	PS1+='\u@\h \W \$ '
 fi
-
-for sh in /etc/bash/bashrc.d/* ; do
-	[[ -r ${sh} ]] && source "${sh}"
-done
 
 # Try to keep environment pollution down, EPA loves us.
 unset use_color sh
