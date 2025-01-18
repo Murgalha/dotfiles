@@ -16,3 +16,6 @@ export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
 if [ -r "$XDG_DATA_HOME/tmdb_api_key" ]; then
     export TMDB_API_KEY="$(cat $XDG_DATA_HOME/tmdb_api_key)"
 fi
+
+export GEM_HOME="$HOME/.gem"
+export GEM_PATH="$HOME/.gem"
